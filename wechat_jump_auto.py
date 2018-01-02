@@ -42,7 +42,19 @@ piece_body_width = config['piece_body_width']             # 棋子的宽度，�
 
 screenshot_way = 2
 
-
+def get_magicnumber():
+    pull_screenshot()
+    im = Image.open('./autojump.png')
+    piece_x1, piece_y1, board_x, board_y = find_piece_and_board(im)
+    set_button_position(im)
+    jump(0) #50ms
+    time.sleep(0.5)
+    pull_screenshot()
+    im = Image.open('./autojump.png')
+    # 获取棋子和 board 的位置
+    piece_x2, piece_y2, board_x, board_y = find_piece_and_board(im)
+    global press_coefficient
+    press_coefficient=50/(math.sqrt((piece_x2-piece_x1) ** 2 + (piece_y2-piece_y1) ** 2))
 def pull_screenshot():
     '''
     新的方法请根据效率及适用性由高到低排序
@@ -81,7 +93,7 @@ def jump(distance):
     跳跃一定的距离
     '''
     press_time = distance * press_coefficient
-    press_time = max(press_time, 200)   # 设置 200ms 是最小的按压时间
+    press_time = max(press_time, 50)   # 设置 200ms 是最小的按压时间
     press_time = int(press_time)
     cmd = 'adb shell input swipe {x1} {y1} {x2} {y2} {duration}'.format(
         x1=swipe_x1,
@@ -233,8 +245,9 @@ def main():
     print('程序版本号：{}'.format(VERSION))
     debug.dump_device_info()
     check_screenshot()
-
+    
     i, next_rest, next_rest_time = 0, random.randrange(3, 10), random.randrange(5, 10)
+    get_magicnumber()
     while True:
         pull_screenshot()
         im = Image.open('./autojump.png')
