@@ -150,7 +150,7 @@ def find_piece_and_board(im):
             break
     x1-=1
     #左边缘x,y 右边缘 x1,y
-    
+    piece_w=x1-x
     piece_x= int((x+x1)/2)
     piece_y = y
     #棋子ok
@@ -172,20 +172,24 @@ def find_piece_and_board(im):
         if not pipei(im_pixel[x,y],bj_ys,15):
             print(im_pixel[x,y])
             break 
-    print(x,y)
+    print(x,y,x_m)
     #get x,y
     bj_ys=list(im_pixel[10,y])
+    wuxiao=x+274*x_m
     for x1 in range(x+274*x_m,x,-x_m):
+        if x>wuxiao>x1 or x<wuxiao<x1:
+            continue
+        
         if not pipei(im_pixel[x,y],bj_ys,15):
-            if not pipei([57,50,89],im_pixel[x,y],40):
-                break
+            if pipei([60,70,70],im_pixel[x,y],20):
+                wuxiao=x-x_m*piece_w
+                continue
+            break
     #get x1,y
     print(x1,y)
     x=(x+x1)/2
     xcha=abs(x-piece_x)
     return xcha
-    
-    return piece_x, piece_y, board_x, board_y
 
 
 def check_screenshot():
