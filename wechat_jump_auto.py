@@ -29,13 +29,7 @@ VERSION = "1.1.1"
 debug_switch = True    # debug 开关，需要调试的时候请改为：True
 #config = config.open_accordant_config()
 press_coefficient=0
-'''
-# Magic Number，不设置可能无法正常执行，请根据具体截图从上到下按需设置，设置保存在 config 文件夹中
-under_game_score_y = config['under_game_score_y']
-press_coefficient = config['press_coefficient']       # 长按的时间系数，请自己根据实际情况调节
-piece_base_height_1_2 = config['piece_base_height_1_2']   # 二分之一的棋子底座高度，可能要调节
-piece_body_width = config['piece_body_width']             # 棋子的宽度，比截图中量到的稍微大一点比较安全，可能要调节
-'''
+
 screenshot_way = 2
 
 def get_magicnumber():
